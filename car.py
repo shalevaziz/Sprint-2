@@ -1,5 +1,6 @@
 import pyfirmata
 import time
+import constants
 # Create a new board, specifying the serial port
 class Servo:
     def __init__(self, board, pin, direction = 1):
@@ -20,11 +21,14 @@ class Servo:
 class Car:
     def __init__(self, servo_left_forward: Servo, servo_right_forward: Servo, servo_left_backward: Servo, servo_right_backward: Servo):
         self.servos = [servo_left_forward, servo_right_forward, servo_left_backward, servo_right_backward]
-    
+        self.direction = [0,0]
+        self.stop()
+        
     def move(self, speed: int, move_time: float = 0):
         # speed = 0 is stop
         # speed = 100 is forward
         # speed = -100 is backward
+        self.direction = [constants.MOVE_CODE, speed]
         if speed != 0:
             self.servos[0].move(speed)
             self.servos[1].move(speed)
@@ -44,7 +48,7 @@ class Car:
         # speed = 0 is stop
         # speed = 100 is right
         # speed = -100 is left
-        
+        self.direction = [constants.TURN_CODE, speed]
         if speed != 0:
             self.servos[0].move(-speed)
             self.servos[1].move(speed)
@@ -62,6 +66,7 @@ class Car:
             self.stop()
     
     def stop(self):
+        self.direction = [constants.NOTHING_CODE, 0]
         self.servos[0].stop()
         self.servos[1].stop()
         self.servos[2].stop()

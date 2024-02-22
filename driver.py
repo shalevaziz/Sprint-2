@@ -2,7 +2,7 @@ import pyfirmata
 import time
 import car
 import keyboard
-
+import constants
 
 def main():
     # Set up the board with bluetooth
@@ -17,25 +17,20 @@ def main():
     i = 0
     while True:
         if keyboard.is_pressed('w'):
-            mycar.move(100)
-            keyboard.wait('w')
-            mycar.stop()
-            print("w")
+            if mycar.direction != constants.MOVE_FORWARD:
+                mycar.move(100)
         elif keyboard.is_pressed('s'):
-            mycar.move(-100)
-            keyboard.wait('s')
-            mycar.stop()
-            print("s")
+            if mycar.direction != constants.MOVE_BACKWARD:
+                mycar.move(-100)
         elif keyboard.is_pressed('a'):
-            mycar.rotate(-100)
-            keyboard.wait('a')
-            mycar.stop()
+            if mycar.direction != constants.TURN_LEFT:
+                mycar.rotate(-100)
         elif keyboard.is_pressed('d'):
-            mycar.rotate(100)
-            keyboard.wait('d')
-            mycar.stop()
+            if mycar.direction != constants.TURN_RIGHT:
+                mycar.rotate(100)
         else:
-            mycar.stop()
+            if mycar.direction != constants.STOP:
+                mycar.stop()
         time.sleep(0.01)
         
         
