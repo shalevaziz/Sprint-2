@@ -15,8 +15,8 @@ class Servo:
         speed = int(((speed/100)*90)+90)
         self.pin.write(speed)
 
-    # def stop(self):
-    #     self.pin.write(90)
+    def stop(self):
+        self.pin.write(90)
 
 class Car:
     def __init__(self, servo_left_forward: Servo, servo_right_forward: Servo, servo_left_backward: Servo, servo_right_backward: Servo):
