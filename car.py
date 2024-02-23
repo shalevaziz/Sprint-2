@@ -19,8 +19,9 @@ class Servo:
         self.pin.write(90)
 
 class Car:
-    def __init__(self, servo_left_forward: Servo, servo_right_forward: Servo, servo_left_backward: Servo, servo_right_backward: Servo):
+    def __init__(self, servo_left_forward: Servo, servo_right_forward: Servo, servo_left_backward: Servo, servo_right_backward: Servo, servo_death_rod: Servo):
         self.servos = [servo_left_forward, servo_right_forward, servo_left_backward, servo_right_backward]
+        self.death_rod = servo_death_rod
         self.direction = [0,0]
         self.stop()
         
@@ -72,6 +73,17 @@ class Car:
         self.servos[2].stop()
         self.servos[3].stop()
         
+    def move_death_rod(self, position: int):
+        if position == constants.UP:
+            if self.death_rod.position == constants.DOWN:
+                self.death_rod.go_up()
+        else:
+            if self.death_rod.position == constants.UP:
+                self.death_rod.go_down()
+        time.sleep(1)
+
+
+
 if __name__ == '__main__':
     board = pyfirmata.Arduino('COM5')
     pins = [3,2,4,5]

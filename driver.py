@@ -99,6 +99,14 @@ def main():
         elif keyboard.is_pressed('d'):
             if mycar.direction != constants.TURN_RIGHT:
                 mycar.rotate(100)
+
+        elif keyboard.is_pressed('o'):
+            if mycar.death_rod.position != constants.UP:
+                mycar.move_death_rod(constants.UP)
+        elif keyboard.is_pressed('p'):
+            if mycar.death_rod.position != constants.DOWN:
+                mycar.move_death_rod(constants.DOWN)
+
         else:
             if mycar.direction != constants.STOP:
                 mycar.stop()
