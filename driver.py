@@ -74,7 +74,7 @@ def main():
     port = 'COM3'
     board = pyfirmata.Arduino(port)
     # Set up the pins
-    pins = [3,2,4,5]
+    pins = [5,4,2,3]
     directions = [-1,1,-1,1]
     servos = [car.Servo(board, pin, direction) for pin, direction in zip(pins, directions)]
     servos.append(death_rod.DeathRod(board, 6))
