@@ -3,6 +3,7 @@ import time
 import car
 import keyboard
 import constants
+import death_rod
 
 class Autonumous():
     def __init__(self, car: car.Car):
@@ -76,6 +77,7 @@ def main():
     pins = [3,2,4,5]
     directions = [-1,1,-1,1]
     servos = [car.Servo(board, pin, direction) for pin, direction in zip(pins, directions)]
+    servos.append(death_rod.DeathRod(board, 6))
     mycar = car.Car(*servos)
     print("connected")
     i = 0

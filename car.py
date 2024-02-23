@@ -1,6 +1,7 @@
 import pyfirmata
 import time
 import constants
+import death_rod
 # Create a new board, specifying the serial port
 class Servo:
     def __init__(self, board, pin, direction = 1):
@@ -19,7 +20,7 @@ class Servo:
         self.pin.write(90)
 
 class Car:
-    def __init__(self, servo_left_forward: Servo, servo_right_forward: Servo, servo_left_backward: Servo, servo_right_backward: Servo, servo_death_rod: Servo):
+    def __init__(self, servo_left_forward: Servo, servo_right_forward: Servo, servo_left_backward: Servo, servo_right_backward: Servo, servo_death_rod: death_rod.DeathRod):
         self.servos = [servo_left_forward, servo_right_forward, servo_left_backward, servo_right_backward]
         self.death_rod = servo_death_rod
         self.direction = [0,0]
@@ -89,6 +90,7 @@ if __name__ == '__main__':
     pins = [3,2,4,5]
     directions = [1,-1,-1,-1]
     servos = [Servo(board, pin, direction) for pin, direction in zip(pins, directions)]
+    servos.append(death_rod.DeathRod(board, 6))
     car = Car(*servos)
     car.move(100, 10)
     
